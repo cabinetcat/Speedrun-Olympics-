@@ -50,9 +50,9 @@ namespace Speedrun_Olympics
         public Player Player { get; }
         public PlayerHandle(Player player, GameHandle GH)
         {
-            this.Player = player;
+            Player = player;
             this.GH = GH;
-            this.Name = player.Name;
+            Name = player.Name;
             PR = GH.PointsReference;
         }
         public override int GetHashCode()

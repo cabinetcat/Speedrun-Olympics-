@@ -1,5 +1,5 @@
 # speedrunolympicslib
-##Usage
+## Usage
 ```c#
 SpeedrunComClient client = new SpeedrunComClient(); //make a new instance of the SpeedrunCom client          
 Game game = client.Games.SearchGame("Sheppard Software Geography"); //initialize game
