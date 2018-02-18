@@ -6,10 +6,10 @@ namespace Speedrun_Olympics
 {
     public class PointsReference
     {
-        public float first { get; private set; }
-        public float second { get; private set; }
-        public float third { get; private set; }
-        public float fourth { get; private set; }
+        public float First { get; private set; }
+        public float Second { get; private set; }
+        public float Third { get; private set; }
+        public float Fourth { get; private set; }
         public PointsReference()
         {
             {
@@ -17,21 +17,21 @@ namespace Speedrun_Olympics
         }
         public void CreateReference(float first, float second, float third, float fourth)
         {
-            this.first = first;
-            this.second = second;
-            this.third = third;
-            this.fourth = fourth;
+            this.First = first;
+            this.Second = second;
+            this.Third = third;
+            this.Fourth = fourth;
         }
     }
     public class GameHandle
     {
-        public Game game { get; }
-        public Gametype type { get; }
+        public Game Game { get; }
+        public Gametype Type { get; }
         public PointsReference PointsReference = new PointsReference();
         public GameHandle(Game game, Gametype type)
         {
-            this.game = game;
-            this.type = type;
+            this.Game = game;
+            this.Type = type;
         }
 
     }
@@ -42,7 +42,7 @@ namespace Speedrun_Olympics
     }
     public class PlayerHandle
     {
-        public float points { get; set; }
+        public float Points { get; set; }
         public byte[] placements = new byte[] { 0, 0, 0, 0 };
         GameHandle GH;
         public string Name { get; private set; }
@@ -66,19 +66,19 @@ namespace Speedrun_Olympics
             var other = obj as PlayerHandle;
             return Player.UserID == other.Player.UserID;
         }
-        public short firstplaces()
+        public short Firstplaces()
         {
             return placements[0];
         }
-        public short secondplaces()
+        public short Secondplaces()
         {
             return placements[1];
         }
-        public short thirdplaces()
+        public short Thirdplaces()
         {
             return placements[2];
         }
-        public short fourthplaces()
+        public short Fourthplaces()
         {
             return placements[3];
         }
@@ -86,42 +86,42 @@ namespace Speedrun_Olympics
         {
             if (run.Player.UserID == Player.UserID)
             {
-                switch (placement(run))
+                switch (Placement(run))
                 {
                     case 0:
-                        points += PR.first;
+                        Points += PR.First;
                         placements[0] += 1;
                         break;
                     case 1:
-                        points += PR.second;
+                        Points += PR.Second;
                         placements[1] += 1;
                         break;
                     case 2:
-                        points += PR.third;
+                        Points += PR.Third;
                         placements[2] += 1;
                         break;
                     case 3:
-                        points += PR.fourth;
+                        Points += PR.Fourth;
                         placements[3] += 1;
                         break;
                 }
             }
         }
-        private byte placement(Run run)
+        private byte Placement(Run run)
         {
             List<Run> categoryruns = new List<Run>();
-            foreach (var runbuffer in GH.game.Runs)
+            foreach (var runbuffer in GH.Game.Runs)
             {
                 try
                 {
-                    if (GH.type == Gametype.fullgame && runbuffer.Level == null)
+                    if (GH.Type == Gametype.fullgame && runbuffer.Level == null)
                     {
                         if (run.Category.ID == runbuffer.Category.ID)
                         {
                             categoryruns.Add(runbuffer);
                         }
                     }
-                    if (GH.type == Gametype.levels && runbuffer.Level != null)
+                    if (GH.Type == Gametype.levels && runbuffer.Level != null)
                     {
                         if ((run.Level.ID == runbuffer.Level.ID) && (run.Category.ID == runbuffer.Category.ID))
                         {
