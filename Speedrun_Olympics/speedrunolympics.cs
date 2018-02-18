@@ -45,26 +45,26 @@ namespace Speedrun_Olympics
         public float points { get; set; }
         public byte[] placements = new byte[] { 0, 0, 0, 0 };
         GameHandle GH;
-
+        public string Name { get; private set; }
         PointsReference PR;
-        public Player player { get; }
+        public Player Player { get; }
         public PlayerHandle(Player player, GameHandle GH)
         {
-            this.player = player;
+            this.Player = player;
             this.GH = GH;
-
+            this.Name = player.Name;
             PR = GH.PointsReference;
         }
         public override int GetHashCode()
         {
-            return player.UserID.GetHashCode();
+            return Player.UserID.GetHashCode();
         }
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj)) return true;
             if (obj == null) return false;
             var other = obj as PlayerHandle;
-            return player.UserID == other.player.UserID;
+            return Player.UserID == other.Player.UserID;
         }
         public short firstplaces()
         {
@@ -84,7 +84,7 @@ namespace Speedrun_Olympics
         }
         public void UpdatePoints(Run run)
         {
-            if (run.Player.UserID == player.UserID)
+            if (run.Player.UserID == Player.UserID)
             {
                 switch (placement(run))
                 {
