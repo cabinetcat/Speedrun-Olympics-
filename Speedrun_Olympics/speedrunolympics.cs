@@ -107,6 +107,27 @@ namespace Speedrun_Olympics
                 }
             }
         }
+        private List<Run> Currentruns(List<Run> runOb)
+        {
+            List<Run> remove = new List<Run>();
+            for (short i = 0; i < runOb.Count; i++)
+            {
+                for (short j = 0; j < runOb.Count; j++)
+                {
+
+                    if ((runOb.ElementAt(j).Times.Primary < runOb.ElementAt(i).Times.Primary) && (runOb.ElementAt(j).Player.UserID == runOb.ElementAt(i).Player.UserID))
+                    {
+                        remove.Add(runOb.ElementAt(i));
+                    }
+
+                }
+            }
+            for (short k = (short)(remove.Count - 1); k > -1; k--)
+            {
+                runOb.Remove(remove.ElementAt(k));
+            }
+            return runOb;
+        }
         private byte Placement(Run run)
         {
             List<Run> categoryruns = new List<Run>();
@@ -114,18 +135,22 @@ namespace Speedrun_Olympics
             {
                 try
                 {
-                    if (GH.Type == Gametype.fullgame && runbuffer.Level == null)
+                    if (runbuffer.Status.Type == RunStatusType.Verified)
                     {
-                        if (run.Category.ID == runbuffer.Category.ID)
+                        if (GH.Type == Gametype.fullgame && runbuffer.Level == null)
                         {
-                            categoryruns.Add(runbuffer);
+                            if (run.Category.ID == runbuffer.Category.ID)
+                            {
+                                categoryruns.Add(runbuffer);
+                            }
                         }
-                    }
-                    if (GH.Type == Gametype.levels && runbuffer.Level != null)
-                    {
-                        if ((run.Level.ID == runbuffer.Level.ID) && (run.Category.ID == runbuffer.Category.ID))
+                        if (GH.Type == Gametype.levels && runbuffer.Level != null)
                         {
-                            categoryruns.Add(runbuffer);
+                            if ((run.Level.ID == runbuffer.Level.ID) && (run.Category.ID == runbuffer.Category.ID))
+                            {
+                                categoryruns.Add(runbuffer);
+
+                            }
                         }
                     }
                 }
@@ -133,7 +158,8 @@ namespace Speedrun_Olympics
                 {
                 }
             }
-            categoryruns = categoryruns.OrderBy(c => c.Times.Primary.Value.TotalSeconds).ToList();
+
+            categoryruns = Currentruns(categoryruns).OrderBy(c => c.Times.Primary.Value.TotalSeconds).ToList();
             return (byte)(categoryruns.IndexOf(run));
         }
     }
